@@ -8,15 +8,12 @@ services:
     restart: unless-stopped
     ports:
       - "${THELOUNGE_PORT:-9000}:9000"
+      - "${THELOUNGE_IDENTD_PORT:-113}:113"
     volumes:
-      - thelounge-data:/var/opt/thelounge
+      - ./data:/var/opt/thelounge
     networks:
-      - thelounge-network
-
-volumes:
-  thelounge-data:
-    driver: local
+      - cloudflared-tunnel
 
 networks:
-  thelounge-network:
-    driver: bridge
+  cloudflared-tunnel:
+    external: true

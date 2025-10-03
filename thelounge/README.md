@@ -49,8 +49,17 @@ podman compose down
 
 ## Data Persistence
 
-User data, configuration, and IRC logs are stored in the `thelounge-data` volume, so they persist across container restarts.
+User data, configuration, and IRC logs are stored in the `./data` directory, so they persist across container restarts.
 
 ## Configuration
 
 - `THELOUNGE_PORT`: The port to expose The Lounge on (default: 9000)
+- `THELOUNGE_IDENTD_PORT`: The port for the identd server (default: 113)
+
+## Network
+
+This service is configured to join the `cloudflared-tunnel` external network. Make sure this network exists before starting the service. You can create it with:
+
+```bash
+podman network create cloudflared-tunnel
+```
