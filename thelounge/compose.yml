@@ -12,8 +12,8 @@ services:
     volumes:
       - ./data:/var/opt/thelounge
     networks:
-      - cloudflared-tunnel
+      - cloudflare-tunnel
 
 networks:
-  cloudflared-tunnel:
+  cloudflare-tunnel:
     external: true

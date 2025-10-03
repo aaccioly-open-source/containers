@@ -15,7 +15,7 @@ Repo for Podman / Compose / Quadlets
 
 [Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container applications. With Compose, you use a YAML file to configure your application's services, networks, and volumes. Then, with a single command, you can create and start all the services from your configuration.
 
-Podman supports the Compose specification through the `podman compose` command (or the standalone `podman-compose` tool).
+Podman supports the Compose specification through the `podman compose` command.
 
 ### Installing Podman Compose
 

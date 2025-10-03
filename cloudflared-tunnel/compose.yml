@@ -3,15 +3,15 @@
 
 services:
   cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: cloudflared-tunnel
+    container_name: cloudflared
+    image: cloudflare/cloudflared
     restart: unless-stopped
     command: tunnel run
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
-      - cloudflared-network
+      - cloudflare-tunnel
 
 networks:
-  cloudflared-network:
-    driver: bridge
+  cloudflare-tunnel:
+    name: cloudflare-tunnel
