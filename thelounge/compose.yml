@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2025 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+services:
+  thelounge:
+    image: thelounge/thelounge:latest
+    container_name: thelounge
+    restart: unless-stopped
+    ports:
+      - "${THELOUNGE_PORT:-9000}:9000"
+    volumes:
+      - thelounge-data:/var/opt/thelounge
+    networks:
+      - thelounge-network
+
+volumes:
+  thelounge-data:
+    driver: local
+
+networks:
+  thelounge-network:
+    driver: bridge
