@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2025 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-tunnel
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - cloudflared-network
+
+networks:
+  cloudflared-network:
+    driver: bridge

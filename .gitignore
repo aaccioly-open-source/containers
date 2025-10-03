@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2025 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Environment files
+.env
+
+# Data directories
+**/data/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
