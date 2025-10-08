@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2025 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+services:
+  oident:
+    build:
+      context: .
+      dockerfile: Containerfile
+    container_name: oident
+    restart: unless-stopped
+    ports:
+      - "${OIDENT_PORT:-113}:113"
+    environment:
+      - IDENT_USERNAME=${IDENT_USERNAME:-unknown}
+#    volumes:
+#     - ./oidentd.conf:/etc/oidentd.conf:ro
+    networks:
+      - cloudflare-tunnel
+
+networks:
+  cloudflare-tunnel:
+    external: true

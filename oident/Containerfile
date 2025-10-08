@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2025 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Builder stage
+FROM alpine:latest AS builder
+
+# Install oidentd and dependencies, create oident user
+RUN apk add --no-cache oidentd libnetfilter_conntrack libnfnetlink libmnl && \
+    addgroup -g 1113 -S oident && \
+    adduser -u 1113 -S -D -H -s /sbin/nologin -G oident oident
+
+# Final stage - minimal runtime with only required libraries
+FROM scratch
+
+# Copy minimal runtime files from alpine
+COPY --from=builder /lib/ld-musl-x86_64.so.1 /lib/
+COPY --from=builder /bin/busybox /bin/sh
+
+# Copy user/group databases for privilege dropping
+COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /etc/group /etc/group
+
+# Copy oidentd binary
+COPY --from=builder /usr/sbin/oidentd /usr/sbin/oidentd
+
+# Copy required libraries
+COPY --from=builder /usr/lib/libnetfilter_conntrack.so.3 /usr/lib/
+COPY --from=builder /usr/lib/libnfnetlink.so.0 /usr/lib/
+COPY --from=builder /usr/lib/libmnl.so.0 /usr/lib/
+
+# Expose ident port
+EXPOSE 113
+
+# Set default username
+ENV IDENT_USERNAME=unknown
+
+# Run oidentd in foreground mode as root, it will drop privileges to oident user after binding to port 113
+# -i: interactive (foreground) mode
+# -S: disable syslog (write to stderr)
+# -r: if query fails, pretend it succeeded and return the configured username
+# -u: drop privileges to this user after binding to port
+CMD ["/bin/sh", "-c", "oidentd -i -S -r \"${IDENT_USERNAME}\" -u oident"]
