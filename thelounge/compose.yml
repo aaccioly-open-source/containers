@@ -8,7 +8,6 @@ services:
     restart: unless-stopped
     ports:
       - "${THELOUNGE_PORT:-9000}:9000"
-      - "${HOST_IDENTD_PORT:-113}:${THELOUNGE_IDENTD_PORT:-9001}"
     volumes:
       - ./data:/var/opt/thelounge
     networks:
