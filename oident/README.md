@@ -14,12 +14,21 @@ This configuration runs oidentd (an ident daemon) in a lightweight Alpine Linux 
 
 ## Setup
 
-1. (Optional) Create a `.env` file to customize the port:
+1. (Optional) Create a `.env` file to customize the configuration:
    ```bash
-   echo "OIDENT_PORT=113" > .env
+   cp .env.example .env
    ```
 
-2. Build and start the service:
+2. Edit `.env` to configure the service:
+   ```bash
+   # Port to expose (default: 113)
+   OIDENT_PORT=113
+
+   # Username to return for ident requests (default: unknown)
+   IDENT_USERNAME=myusername
+   ```
+
+3. Build and start the service:
    ```bash
    podman compose up -d --build
    ```
@@ -47,6 +56,11 @@ The oidentd configuration is stored in `oidentd.conf` and mounted into the conta
 
 Edit `oidentd.conf` to customize the behavior. See `oidentd.conf(5)` for more information on available options.
 
+### Environment Variables
+
+- **`OIDENT_PORT`** - The port to expose the service on (default: `113`)
+- **`IDENT_USERNAME`** - The username to return for all ident requests when forwarding fails or no specific configuration is set (default: `unknown`)
+
 ### Port Configuration
 
 The default port is 113 (standard ident port). You can change this by setting the `OIDENT_PORT` environment variable in a `.env` file.
@@ -54,7 +68,3 @@ The default port is 113 (standard ident port). You can change this by setting th
 ## Network
 
 This service connects to the `cloudflare-tunnel` network to work with other containerized services that require ident support.
-
-## Image Optimization
-
-The image is based on Alpine Linux for minimal size and uses the official oidentd package. The daemon runs in foreground mode (`-i -S -f` flags) suitable for container execution.
