@@ -17,3 +17,9 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Immich
+immich/config/immich-config.json
+
+# nginx-proxy
+nginx-proxy/config/nginx.tmpl
