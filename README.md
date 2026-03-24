@@ -48,7 +48,11 @@ This repository contains several subdirectories, each with its own `compose.yml`
 
 ## Available Services
 
+- **clipcascade**: Clipboard and file sharing service
 - **cloudflared-tunnel**: Cloudflare Tunnel configuration
+- **immich**: Self-hosted photo and video backup stack with PostgreSQL, Valkey, and machine learning services
+- **nginx-proxy**: Reverse proxy stack with automated ACME certificate management
+- **oident**: Ident service container
 - **thelounge**: The Lounge web IRC client
 
 ## License
