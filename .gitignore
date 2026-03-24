@@ -19,7 +19,7 @@
 Thumbs.db
 
 # Immich
-immich/config/immich-config.json
+/immich/config/immich-config.json
 
 # nginx-proxy
-nginx-proxy/config/nginx.tmpl
+/nginx-proxy/config/nginx.tmpl
