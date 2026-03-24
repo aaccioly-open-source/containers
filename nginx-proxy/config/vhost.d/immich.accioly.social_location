@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 Anthony Accioly <anthony@accioly.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Support uploads up to 50GB
+client_max_body_size 50g;
+
+# Increase body buffer to avoid limiting upload speed
+client_body_buffer_size 1024k;
+
+# Stream request body directly to backend (avoid buffering large uploads)
+proxy_request_buffering off;
+
+# Extended timeouts for large uploads and server-side processing
+proxy_read_timeout 600s;
+proxy_send_timeout 600s;
+send_timeout       600s;
